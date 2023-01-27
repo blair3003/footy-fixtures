@@ -1,37 +1,29 @@
 import { API_FOOTBALL_KEY } from './data/apiKey.js'
+import {
+	getLocalData,
+	getNewData,
+	isDataStale
+} from './data/dataFuncs.js'
 
 console.log("%cFooty Fixtures ⚽", "color:blue; font-size:16px")
 console.log("//////////////////")
 
 console.log(`API Key: ${API_FOOTBALL_KEY}`)
+console.log("//////////////////")
 
 
 // Get the fixture list
-// 1. Check local storage for data
+// 1. Get local data from storage
+let data = getLocalData()
 
-// stored object structure => { date: timestamp, fixtures }
+// 2. Check if local data is stale
+const dataIsStale = isDataStale(data)
 
-let data = JSON.parse(localStorage.getItem('footy-fixtures'))
-
-if (!data) {
-
-	// Get full season fixtures
-
-	const fixtures = {
-		fix1: "Gunners vs Spurs",
-		fix2: "United vs City"
-	}
-
-
-	// Save fixtures to local storage
-
-	data = { ts: Date.now(), fixtures }
-
-	localStorage.setItem('footy-fixtures', JSON.stringify(data))
-
-	console.log('Got new data')
-
-} else { console.log('Got data from storage') }
+// 3. If no local data or data is stale, get new data
+if (!data || dataIsStale) {
+	console.log('Data is missing or stale!')
+	data = getNewData()
+}
 
 console.log(data)
 
