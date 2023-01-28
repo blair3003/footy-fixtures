@@ -1,9 +1,5 @@
-import { API_FOOTBALL_KEY } from './apiKey.js'
-import { FIXTURES } from './fixtures.js'
-
-const getFixtures = () => {
-	return FIXTURES
-}
+import TEST_DATA from '../data/test.js'
+import { fetchFixtures } from './api.js'
 
 export const getLocalData = () => {
 	console.log('Getting local data')
@@ -22,10 +18,12 @@ export const isDataStale = (data) => {
 	return dataDate !== today
 }
 
-export const getNewData = () => {
+export const getNewData = async () => {
 	console.log('Getting new data')
-	const fixtures = getFixtures()
+	// const fixtures = await fetchFixtures()
+	const fixtures = TEST_DATA
 	const data = { ts: Date.now(), fixtures }
 	setLocalData(data)
 	return data
 }
+

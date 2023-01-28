@@ -1,9 +1,9 @@
-import { API_FOOTBALL_KEY } from './data/apiKey.js'
+import { API_FOOTBALL_KEY } from './funcs/api.js'
 import {
 	getLocalData,
 	getNewData,
 	isDataStale
-} from './data/dataFuncs.js'
+} from './funcs/data.js'
 
 console.log("%cFooty Fixtures ⚽", "color:blue; font-size:16px")
 console.log("//////////////////")

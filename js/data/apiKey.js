@@ -1,1 +1,0 @@
-export const API_FOOTBALL_KEY = "7cbad17648c89efc6f13563908adbac8"
