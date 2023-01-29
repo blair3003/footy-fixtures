@@ -47,7 +47,7 @@ const isMatchOngoing = (status) => {
 	return ongoingStatus.includes(status)
 }
 
-const getFixtures = async () => {
+const getNewFixtures = async () => {
 	console.log('Getting new data')
 	// Fetch fixtures list
 	const fixtures = await fetchFixtures()
@@ -90,7 +90,7 @@ export const loadFixtures = async () => {
 	// Check fixtures data
 	if (!fixtures) {
 		// If there is no data, get new data
-		getFixtures()
+		getNewFixtures()
 	} else {
 		// Else just update todays fixtures
 		updateTodaysFixtures()
