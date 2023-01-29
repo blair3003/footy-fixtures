@@ -7,6 +7,7 @@ import {
 const getLocalFixtures = () => {
 	console.log('Getting local data')
 	const data = JSON.parse(localStorage.getItem('footy-fixtures'))
+	if (!data || !data?.ts || !isDateToday(data.ts)) return
 	return data?.fixtures
 }
 
@@ -53,20 +54,20 @@ const getFixtures = async () => {
 	// const fixtures = TEST_DATA
 	// Set local data with fetched fixtures list
 	setLocalFixtures(fixtures)
-	// Return fixtures list
-	return fixtures
 }
 
-const updateTodaysFixtures = async (fixtures) => {
+const updateTodaysFixtures = async () => {
 	console.log('Updating todays fixtures')
+	// Get fixtures
+	const fixtures = getLocalFixtures()
 	// Get list of todays ongoing fixtures
-	const todays = fixtures.filter(
+	const todays = fixtures?.filter(
 		obj =>
 			isDateToday(obj.fixture.timestamp * 1000)
 		&&	isMatchOngoing(obj.fixture.status.short)
 	)
 	// If no fixtures today, early return
-	if (!todays.length) {
+	if (!todays?.length) {
 		console.log('No fixtures today')
 		return fixtures
 	}
@@ -81,20 +82,17 @@ const updateTodaysFixtures = async (fixtures) => {
 	const updatedFixtures = [...withoutTodays, ...todaysFixtures]
 	// Set local data with updated fixtures list
 	setLocalFixtures(updatedFixtures)
-	// Return updated fixtures list
-	return updatedFixtures
 }
 
 export const loadFixtures = async () => {
 	// Get fixtures stored locally
-	let fixtures = getLocalFixtures()
-	// Check data is at least from today
-	const stale = isDataStale()
-	// If there is no data, or data was last updated before today, get new data
-	if (!fixtures || stale) {
-		console.log('Data is missing or stale!')
-		fixtures = await getFixtures()
+	const fixtures = getLocalFixtures()
+	// Check fixtures data
+	if (!fixtures) {
+		// If there is no data, get new data
+		getFixtures()
+	} else {
+		// Else just update todays fixtures
+		updateTodaysFixtures()
 	}
-	// Update todays fixtures
-	fixtures = await updateTodaysFixtures(fixtures)
 }
