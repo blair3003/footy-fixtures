@@ -9,9 +9,14 @@ console.log("//////////////////")
 console.log(`API Key: ${API_FOOTBALL_KEY}`)
 console.log("//////////////////")
 
+
+
 const app = () => {
-	
-	loadFixtures()
+
+	const plus1 = document.getElementById("plus1")
+	plus1.addEventListener("click", () => loadFixtures(1))
+
+	loadFixtures(0)
 }
 
 document.addEventListener("DOMContentLoaded", app);

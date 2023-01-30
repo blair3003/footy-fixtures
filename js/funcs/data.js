@@ -10,6 +10,9 @@ import {
 	isDateToday,
 	isMatchOngoing
 } from './helper.js'
+import FootyFixtures from "../class/FootyFixtures.js";
+
+const footyFixtures = new FootyFixtures();
 
 const getLocalFixtures = () => {
 	console.log('Getting local data')
@@ -79,9 +82,21 @@ const getFixtures = async () => {
 	return fixtures
 }
 
-export const loadFixtures = async () => {
+const updateFootyFixtures = (fixtures, offset) => {
+	console.log('Updating FootyFixtures')
+	const date = new Date()	
+	date.setDate(footyFixtures.date.getDate() + offset)
+	footyFixtures.date = date
+	footyFixtures.fixtures = fixtures.filter(obj => date === new Date(obj.fixture.timestamp).setHours(0, 0, 0, 0))
+}
+
+export const loadFixtures = async (offset) => {
 	// Get fixtures
 	const fixtures = await getFixtures()
-	// Update display
-	if (fixtures) updateDisplay(fixtures)
+
+	// Update state and display
+	if (fixtures) {
+		updateFootyFixtures(fixtures, offset)
+		updateDisplay(footyFixtures)
+	}		
 }
