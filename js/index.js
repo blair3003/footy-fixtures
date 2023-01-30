@@ -10,14 +10,8 @@ console.log(`API Key: ${API_FOOTBALL_KEY}`)
 console.log("//////////////////")
 
 const app = () => {
-
-
+	
 	loadFixtures()
-
-
-	// Display the fixtures
-
-	// ???
 }
 
 document.addEventListener("DOMContentLoaded", app);

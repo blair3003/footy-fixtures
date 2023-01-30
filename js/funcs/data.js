@@ -3,48 +3,29 @@ import {
 	fetchFixtures,
 	fetchFixturesWithIds
 } from './api.js'
+import {
+	updateDisplay
+} from './dom.js'
+import {
+	isDateToday,
+	isMatchOngoing
+} from './helper.js'
 
 const getLocalFixtures = () => {
 	console.log('Getting local data')
+	// Get data from local storage
 	const data = JSON.parse(localStorage.getItem('footy-fixtures'))
+	// If no data, timestamp or timestamp is before today, early return
 	if (!data || !data?.ts || !isDateToday(data.ts)) return
 	return data?.fixtures
 }
 
 const setLocalFixtures = (fixtures) => {
 	console.log('Setting local data')
+	// Set data object with timestamp and fixtures
 	const data = { ts: Date.now(), fixtures }
+	// Store data object locally
 	localStorage.setItem('footy-fixtures', JSON.stringify(data))
-}
-
-const isDataStale = () => {
-	console.log('Checking data is from today')
-	const data = JSON.parse(localStorage.getItem('footy-fixtures'))
-	if (!data?.ts) return true
-	return !isDateToday(data.ts)
-}
-
-const isDateToday = (ts) => {
-	const today = new Date().setHours(0, 0, 0, 0)
-	const date = new Date(ts).setHours(0, 0, 0, 0)
-	return date === today
-}
-
-const isMatchOngoing = (status) => {
-	const ongoingStatus = [
-		"TBD",
-		"NS",
-		"1H",
-		"HT",
-		"2H",
-		"ET",
-		"BT",
-		"P",
-		"SUSP",
-		"INT",
-		"LIVE",
-	]
-	return ongoingStatus.includes(status)
 }
 
 const getNewFixtures = async () => {
@@ -54,14 +35,13 @@ const getNewFixtures = async () => {
 	// const fixtures = TEST_DATA
 	// Set local data with fetched fixtures list
 	setLocalFixtures(fixtures)
+	return fixtures
 }
 
-const updateTodaysFixtures = async () => {
+const updateTodaysFixtures = async (fixtures) => {
 	console.log('Updating todays fixtures')
-	// Get fixtures
-	const fixtures = getLocalFixtures()
 	// Get list of todays ongoing fixtures
-	const todays = fixtures?.filter(
+	const todays = fixtures.filter(
 		obj =>
 			isDateToday(obj.fixture.timestamp * 1000)
 		&&	isMatchOngoing(obj.fixture.status.short)
@@ -82,17 +62,26 @@ const updateTodaysFixtures = async () => {
 	const updatedFixtures = [...withoutTodays, ...todaysFixtures]
 	// Set local data with updated fixtures list
 	setLocalFixtures(updatedFixtures)
+	return updatedFixtures
 }
 
-export const loadFixtures = async () => {
+const getFixtures = async () => {
 	// Get fixtures stored locally
-	const fixtures = getLocalFixtures()
+	let fixtures = getLocalFixtures()
 	// Check fixtures data
 	if (!fixtures) {
 		// If there is no data, get new data
-		getNewFixtures()
+		fixtures = await getNewFixtures()
 	} else {
 		// Else just update todays fixtures
-		updateTodaysFixtures()
+		fixtures = await updateTodaysFixtures(fixtures)
 	}
+	return fixtures
+}
+
+export const loadFixtures = async () => {
+	// Get fixtures
+	const fixtures = await getFixtures()
+	// Update display
+	if (fixtures) updateDisplay(fixtures)
 }
