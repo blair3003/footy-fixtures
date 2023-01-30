@@ -2,6 +2,9 @@ import { API_FOOTBALL_KEY } from './funcs/api.js'
 import {
 	loadFixtures
 } from './funcs/data.js'
+import {
+	setDisplay
+} from './funcs/dom.js'
 
 console.log("%cFooty Fixtures ⚽", "color:blue; font-size:16px")
 console.log("//////////////////")
@@ -13,10 +16,9 @@ console.log("//////////////////")
 
 const app = () => {
 
-	const plus1 = document.getElementById("plus1")
-	plus1.addEventListener("click", () => loadFixtures(1))
+	setDisplay()
 
-	loadFixtures(0)
+	loadFixtures()
 }
 
 document.addEventListener("DOMContentLoaded", app);
