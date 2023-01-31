@@ -63,14 +63,14 @@ const setDateText = (offset) => {
 	const date = footyFixtures.date
 	const offsetDate = new Date(date + (offset * 24 * 60 * 60 * 1000))
 	// If the date happens to be yesterday, today, or tomorrow, return that specific text
-	switch (offsetDate.setHours(0, 0, 0, 0)) {
-		case new Date().setHours(0, 0, 0, 0):
+	switch (offsetDate.setUTCHours(0, 0, 0, 0)) {
+		case new Date().setUTCHours(0, 0, 0, 0):
 			return 'Today'
 			break
-		case new Date().setHours(0, 0, 0, 0) - (24 * 60 * 60 * 1000):
+		case new Date().setUTCHours(0, 0, 0, 0) - (24 * 60 * 60 * 1000):
 			return 'Yesterday'
 			break
-		case new Date().setHours(0, 0, 0, 0) + (24 * 60 * 60 * 1000):
+		case new Date().setUTCHours(0, 0, 0, 0) + (24 * 60 * 60 * 1000):
 			return 'Tomorrow'
 			break
 		default:

@@ -1,6 +1,6 @@
 export const isDateToday = (ts) => {
-	const today = new Date().setHours(0, 0, 0, 0)
-	const date = new Date(ts).setHours(0, 0, 0, 0)
+	const today = new Date().setUTCHours(0, 0, 0, 0)
+	const date = new Date(ts).setUTCHours(0, 0, 0, 0)
 	return date === today
 }
 
