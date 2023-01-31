@@ -2,13 +2,31 @@ import FootyFixtures from "../class/FootyFixtures.js";
 
 const footyFixtures = FootyFixtures.instance
 
+const dateButtons = {
+	minus3: document.getElementById("minus3"),
+	minus2: document.getElementById("minus2"),
+	minus1: document.getElementById("minus1"),
+	plus0: document.getElementById("plus0"),
+	plus1: document.getElementById("plus1"),
+	plus2: document.getElementById("plus2"),
+	plus3: document.getElementById("plus3"),
+	plus4: document.getElementById("plus4"),
+	plus5: document.getElementById("plus5"),
+	plus6: document.getElementById("plus6")
+}
+
 export const setDisplay = () => {
-	const minus1 = document.getElementById("minus1")
-	minus1.addEventListener("click", () => displayFixtures(-1))
-	const plus1 = document.getElementById("plus1")
-	plus1.addEventListener("click", () => displayFixtures(1))
-	const plus2 = document.getElementById("plus2")
-	plus2.addEventListener("click", () => displayFixtures(2))
+	// Add event listeners
+	dateButtons.minus3.addEventListener("click", () => displayFixtures(-3))
+	dateButtons.minus2.addEventListener("click", () => displayFixtures(-2))
+	dateButtons.minus1.addEventListener("click", () => displayFixtures(-1))
+	dateButtons.plus0.addEventListener("click", () => displayFixtures(0))
+	dateButtons.plus1.addEventListener("click", () => displayFixtures(1))
+	dateButtons.plus2.addEventListener("click", () => displayFixtures(2))
+	dateButtons.plus3.addEventListener("click", () => displayFixtures(3))
+	dateButtons.plus4.addEventListener("click", () => displayFixtures(4))
+	dateButtons.plus5.addEventListener("click", () => displayFixtures(5))
+	dateButtons.plus6.addEventListener("click", () => displayFixtures(6))
 }
 
 export const displayFixtures = (offset = 0) => {
@@ -21,4 +39,61 @@ const updateDisplay = () => {
 	console.log(new Date(footyFixtures.date))
 	console.log(`${footyFixtures.fixtures.length} game(s) on this day`)
 	console.log(footyFixtures.fixtures)
+
+	// Update date buttons
+	updateDateButtons()
+	updateFixtureList()
+
+}
+
+const updateDateButtons = () => {
+	dateButtons.minus3.textContent = setDateText(-3)
+	dateButtons.minus2.textContent = setDateText(-2)
+	dateButtons.minus1.textContent = setDateText(-1)
+	dateButtons.plus0.textContent = setDateText(0)
+	dateButtons.plus1.textContent = setDateText(1)
+	dateButtons.plus2.textContent = setDateText(2)
+	dateButtons.plus3.textContent = setDateText(3)
+	dateButtons.plus4.textContent = setDateText(4)
+	dateButtons.plus5.textContent = setDateText(5)
+	dateButtons.plus6.textContent = setDateText(6)
+}
+
+const setDateText = (offset) => {
+	const date = footyFixtures.date
+	const offsetDate = new Date(date + (offset * 24 * 60 * 60 * 1000))
+	// If the date happens to be yesterday, today, or tomorrow, return that specific text
+	switch (offsetDate.setHours(0, 0, 0, 0)) {
+		case new Date().setHours(0, 0, 0, 0):
+			return 'Today'
+			break
+		case new Date().setHours(0, 0, 0, 0) - (24 * 60 * 60 * 1000):
+			return 'Yesterday'
+			break
+		case new Date().setHours(0, 0, 0, 0) + (24 * 60 * 60 * 1000):
+			return 'Tomorrow'
+			break
+		default:
+			break
+	}
+	// Otherwise return the formatted date string
+	return offsetDate.toLocaleDateString("en-US", { weekday: 'short', month: 'short', day: 'numeric' })
+}
+
+const updateFixtureList = () => {
+	const fixturesList = document.getElementById("fixtures")
+	fixturesList.innerHTML = ''
+
+	const fixtures = footyFixtures.fixtures
+
+	const fragment = document.createDocumentFragment()
+
+	fixtures.forEach(fixture => {
+		const div = document.createElement("div")
+		div.className = "fixture"
+		div.textContent = `${fixture.teams.home.name} vs ${fixture.teams.away.name}` 
+		fragment.append(div)
+	})
+
+	fixturesList.append(fragment)
 }
