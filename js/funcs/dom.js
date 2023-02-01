@@ -84,20 +84,21 @@ const updateFixtureList = () => {
 	const fixturesList = document.getElementById("fixtures")
 	fixturesList.innerHTML = ''
 
-	const fixtures = footyFixtures.fixtures
+	const fixtures = footyFixtures.fixtures	
 
-	fixtures.sort((a, b) => a.fixture.timestamp - b.fixture.timestamp)
-
-	const fragment = document.createDocumentFragment()
-
-	fixtures.forEach(fixture => {
-		const div = document.createElement("div")
-		div.className = "fixture"
-		div.innerHTML = setFixtureText(fixture)
-		fragment.append(div)
-	})
-
-	fixturesList.append(fragment)
+	if (!fixtures.length) {
+		fixturesList.innerHTML = `<div class="no-fixtures">No fixtures today</div>`
+	} else {
+		const fragment = document.createDocumentFragment()
+		fixtures.sort((a, b) => a.fixture.timestamp - b.fixture.timestamp)
+		fixtures.forEach(fixture => {
+			const div = document.createElement("div")
+			div.className = "fixture"
+			div.innerHTML = setFixtureText(fixture)
+			fragment.append(div)
+		})
+		fixturesList.append(fragment)
+	}
 }
 
 const setFixtureText = (fixture) => {
