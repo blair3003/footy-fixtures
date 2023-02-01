@@ -86,14 +86,37 @@ const updateFixtureList = () => {
 
 	const fixtures = footyFixtures.fixtures
 
+	fixtures.sort((a, b) => a.fixture.timestamp - b.fixture.timestamp)
+
 	const fragment = document.createDocumentFragment()
 
 	fixtures.forEach(fixture => {
 		const div = document.createElement("div")
 		div.className = "fixture"
-		div.textContent = `${fixture.teams.home.name} vs ${fixture.teams.away.name}` 
+		div.innerHTML = setFixtureText(fixture)
 		fragment.append(div)
 	})
 
 	fixturesList.append(fragment)
+}
+
+const setFixtureText = (fixture) => {
+
+	let timeOrScore = ''
+
+	if (fixture.fixture.status.short === 'NS') {
+		const date = new Date(fixture.fixture.timestamp * 1000)
+		const time = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+		timeOrScore = `<span class="time">${time}</span>`
+	} else {
+		const score = `${fixture.goals.home} - ${fixture.goals.away}`
+		timeOrScore = `<span class="score">${score}</span>`
+	}
+
+	return `<span class="home-name">${fixture.teams.home.name}</span> 
+			<img class="home-logo" src="${fixture.teams.home.logo}" style="width: 15px;"/> 
+			${timeOrScore} 
+			<img class="away-logo" src="${fixture.teams.away.logo}" style="width: 15px;" /> 
+			<span class="away-name">${fixture.teams.away.name}</span>`
+
 }
