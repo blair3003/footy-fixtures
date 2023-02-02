@@ -21,5 +21,5 @@ const app = () => {
 	loadFixtures()
 }
 
-document.addEventListener("DOMContentLoaded", app);
+document.addEventListener("DOMContentLoaded", app)
 

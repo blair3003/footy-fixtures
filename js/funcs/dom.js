@@ -115,9 +115,9 @@ const setFixtureText = (fixture) => {
 	}
 
 	return `<span class="home-name">${fixture.teams.home.name}</span> 
-			<img class="home-logo" src="${fixture.teams.home.logo}" style="width: 15px;"/> 
+			<img class="logo" src="${fixture.teams.home.logo}" style="width: 15px;"/> 
 			${timeOrScore} 
-			<img class="away-logo" src="${fixture.teams.away.logo}" style="width: 15px;" /> 
+			<img class="logo" src="${fixture.teams.away.logo}" style="width: 15px;" /> 
 			<span class="away-name">${fixture.teams.away.name}</span>`
 
 }
