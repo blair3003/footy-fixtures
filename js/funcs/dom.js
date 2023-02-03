@@ -27,6 +27,8 @@ export const setDisplay = () => {
 	dateButtons.plus4.addEventListener("click", () => displayFixtures(4))
 	dateButtons.plus5.addEventListener("click", () => displayFixtures(5))
 	dateButtons.plus6.addEventListener("click", () => displayFixtures(6))
+
+	setNavButtonsClickToDrag()
 }
 
 export const displayFixtures = (offset = 0) => {
@@ -34,16 +36,14 @@ export const displayFixtures = (offset = 0) => {
 	updateDisplay()
 }
 
-const updateDisplay = () => {
+const updateDisplay = (e) => {
 	console.log('Updating display')
 	console.log(new Date(footyFixtures.date))
 	console.log(`${footyFixtures.fixtures.length} game(s) on this day`)
 	console.log(footyFixtures.fixtures)
-
-	// Update date buttons
 	updateDateButtons()
+	centerDateButtons()
 	updateFixtureList()
-
 }
 
 const updateDateButtons = () => {
@@ -83,9 +83,7 @@ const setDateText = (offset) => {
 const updateFixtureList = () => {
 	const fixturesList = document.getElementById("fixtures")
 	fixturesList.innerHTML = ''
-
 	const fixtures = footyFixtures.fixtures	
-
 	if (!fixtures.length) {
 		fixturesList.innerHTML = `<div class="no-fixtures">No fixtures today</div>`
 	} else {
@@ -102,22 +100,51 @@ const updateFixtureList = () => {
 }
 
 const setFixtureText = (fixture) => {
-
 	let timeOrScore = ''
-
 	if (fixture.fixture.status.short === 'NS') {
 		const date = new Date(fixture.fixture.timestamp * 1000)
 		const time = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-		timeOrScore = `<span class="time">${time}</span>`
+		timeOrScore = `<div class="time">${time}</div>`
 	} else {
 		const score = `${fixture.goals.home} - ${fixture.goals.away}`
-		timeOrScore = `<span class="score">${score}</span>`
+		timeOrScore = `<div class="score">${score}</div>`
 	}
-
-	return `<span class="home-name">${fixture.teams.home.name}</span> 
-			<img class="logo" src="${fixture.teams.home.logo}" style="width: 15px;"/> 
+	return `<div class="home">${fixture.teams.home.name}</div> 
+			<img class="logo" src="${fixture.teams.home.logo}" /> 
 			${timeOrScore} 
-			<img class="logo" src="${fixture.teams.away.logo}" style="width: 15px;" /> 
-			<span class="away-name">${fixture.teams.away.name}</span>`
+			<img class="logo" src="${fixture.teams.away.logo}" /> 
+			<div class="away">${fixture.teams.away.name}</div>`
+}
 
+const setNavButtonsClickToDrag = () => {
+	// Inspired by Ionut Daniel on CodePen https://codepen.io/thenutz
+	const dateButtons = document.getElementById("date-buttons")
+	let isDown = false
+	let startX = null
+	let scrollLeft = null
+	dateButtons.addEventListener("mousedown", (e) => {
+		isDown = true
+		startX = e.pageX - dateButtons.offsetLeft
+		scrollLeft = dateButtons.scrollLeft
+	})
+	dateButtons.addEventListener("mouseleave", () => {
+		isDown = false
+	})
+	dateButtons.addEventListener("mouseup", () => {
+		isDown = false
+	})
+	dateButtons.addEventListener("mousemove", (e) => {
+		if(!isDown) return
+		e.preventDefault()
+		dateButtons.scrollLeft = startX + scrollLeft + dateButtons.offsetLeft - e.pageX
+	})
+}
+
+const centerDateButtons = () => {
+	console.log("centering date buttons")
+	const dateButtons = document.getElementById("date-buttons")
+	const centerButton = document.getElementById("plus0")
+	const windowWidth = window.innerWidth
+	// TODO
+	dateButtons.scrollLeft = 100
 }

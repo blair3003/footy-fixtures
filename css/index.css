@@ -12,7 +12,7 @@
 
 html {
 	font-family: 'Nunito Sans', sans-serif;
-	font-size: 16px;
+	font-size: 12px;
 }
 
 body {
@@ -35,23 +35,26 @@ nav {
 	display: flex;
 	flex-wrap: nowrap;
 	overflow-x: scroll;
-	background-color: #0b0828;
+	gap: 1rem;
+	cursor: pointer;
 }
 
 button {
 	all: unset;
 	padding: 0.5rem;
 	flex-shrink:  0;
-	cursor: pointer;
-	font-size: 0.75rem;
 }
 
 .logo {
 	width: 1rem;
+	height: 1rem;
 }
 
 #fixtures {
-	padding: 2rem;
+	background-color: #110c3d;
+	border-radius:  1rem;
+	margin:  1rem;
+	padding: 2rem 1rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -66,4 +69,22 @@ button {
 
 .no-fixtures {
 	font-size: 1rem;
+}
+
+.fixture {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.home {
+	text-align: right;
+	flex-basis: 100%;
+	flex-shrink: 0;	
+}
+
+.away {
+	flex-basis: 100%;
+	flex-shrink: 0;
 }
