@@ -145,6 +145,5 @@ const centerDateButtons = () => {
 	const dateButtons = document.getElementById("date-buttons")
 	const centerButton = document.getElementById("plus0")
 	const windowWidth = window.innerWidth
-	// TODO
-	dateButtons.scrollLeft = 100
+	dateButtons.scrollLeft = centerButton.offsetLeft + (centerButton.offsetWidth / 2) - (windowWidth / 2)
 }
