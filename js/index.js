@@ -3,22 +3,25 @@ import {
 	loadFixtures
 } from './funcs/data.js'
 import {
-	setDisplay
+	setDisplay,
+	displayFixtures
 } from './funcs/dom.js'
 
 console.log("%cFooty Fixtures ⚽", "color:blue; font-size:16px")
 console.log("//////////////////")
 
-console.log(`API Key: ${API_FOOTBALL_KEY}`)
-console.log("//////////////////")
-
-
-
 const app = () => {
 
 	setDisplay()
 
-	loadFixtures()
+	try {
+		loadFixtures()
+	} catch (err) {
+		console.err(err)
+	} finally {
+		displayFixtures()
+	}
+
 }
 
 document.addEventListener("DOMContentLoaded", app)

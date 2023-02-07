@@ -1,18 +1,21 @@
-import TEST_DATA from '../data/test.js'
 import {
 	fetchFixtures,
 	fetchFixturesWithIds
 } from './api.js'
-import {
-	displayFixtures
-} from './dom.js'
-import {
-	isDateToday,
-	isMatchOngoing
-} from './helper.js'
-import FootyFixtures from "../class/FootyFixtures.js"
 
-const footyFixtures = FootyFixtures.instance
+export const loadFixtures = async () => {
+	// Get fixtures stored locally
+	let fixtures = getLocalFixtures()
+	// Check fixtures data
+	if (!fixtures) {
+		// If there is no data, get new data
+		fixtures = await getNewFixtures()
+	} else {
+		// Else update live fixtures
+		fixtures = await updateLiveFixtures(fixtures)
+	}
+	return fixtures
+}
 
 const getLocalFixtures = () => {
 	console.log('Getting local data')
@@ -23,6 +26,21 @@ const getLocalFixtures = () => {
 	return data?.fixtures
 }
 
+const isDateToday = (ts) => {
+	const today = new Date().setUTCHours(0, 0, 0, 0)
+	const date = new Date(ts).setUTCHours(0, 0, 0, 0)
+	return date === today
+}
+
+const getNewFixtures = async () => {
+	console.log('Getting new data')
+	// Fetch fixtures list
+	const fixtures = await fetchFixtures()
+	// Set local data with fetched fixtures list
+	setLocalFixtures(fixtures)
+	return fixtures
+}
+
 const setLocalFixtures = (fixtures) => {
 	console.log('Setting local data')
 	// Set data object with timestamp and fixtures
@@ -31,32 +49,18 @@ const setLocalFixtures = (fixtures) => {
 	localStorage.setItem('footy-fixtures', JSON.stringify(data))
 }
 
-const getNewFixtures = async () => {
-	console.log('Getting new data')
-	// Fetch fixtures list
-	const fixtures = await fetchFixtures()
-	// const fixtures = TEST_DATA
-	// Set local data with fetched fixtures list
-	setLocalFixtures(fixtures)
-	return fixtures
-}
-
-const updateTodaysFixtures = async (fixtures) => {
-	console.log('Updating todays fixtures')
+const updateLiveFixtures = async (fixtures) => {
+	console.log('Updating live fixtures')
 	// Get list of todays ongoing fixtures
-	const todays = fixtures.filter(
-		obj =>
-			isDateToday(obj.fixture.timestamp * 1000)
-		&&	isMatchOngoing(obj.fixture.status.short)
-	)
+	const todays = fixtures.filter(obj => isDateToday(obj.fixture.timestamp * 1000))
 	// If no fixtures today, early return
 	if (!todays?.length) {
-		console.log('No fixtures today')
+		console.log('No live fixtures')
 		return fixtures
 	}
 	// Get list of ids of todays fixtures
 	const todaysIds = todays.map(obj => obj.fixture.id).slice(0, 20) // Slice to 20 because api only allows query on 20 ids max
-	console.log(`${todaysIds.length} fixture(s) to update`)
+	console.log(`${todaysIds.length} live fixture(s)`)
 	// Fetch updated fixtures
 	const todaysFixtures = await fetchFixturesWithIds(todaysIds)
 	// Create list without todays fixtures
@@ -68,26 +72,7 @@ const updateTodaysFixtures = async (fixtures) => {
 	return updatedFixtures
 }
 
-const getFixtures = async () => {
-	// Get fixtures stored locally
-	let fixtures = getLocalFixtures()
-	// Check fixtures data
-	if (!fixtures) {
-		// If there is no data, get new data
-		fixtures = await getNewFixtures()
-	} else {
-		// Else just update todays fixtures
-		fixtures = await updateTodaysFixtures(fixtures)
-	}
-	return fixtures
-}
 
-export const loadFixtures = async () => {
-	// Get fixtures
-	const fixtures = await getFixtures()
 
-	// Update state and display
-	if (fixtures) {
-		displayFixtures()
-	}		
-}
+
+

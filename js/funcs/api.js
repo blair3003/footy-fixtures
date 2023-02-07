@@ -20,9 +20,7 @@ export const fetchFixtures = async () => {
 
 export const fetchFixturesWithIds = async (ids) => {
 	console.log('Fetching data with ids')
-
 	const idsString = ids.slice(0, 20).join('-')
-
 	const url = `https://v3.football.api-sports.io/fixtures?ids=${idsString}`
 	const options = {
 		headers: {
