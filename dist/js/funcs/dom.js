@@ -115,7 +115,7 @@ const updateFixtureList = () => {
 	fixturesList.innerHTML = ''
 	// Get current fixtures from state
 	const fixtures = footyFixtures.fixtures	
-	if (!fixtures.length) {
+	if (!fixtures?.length) {
 		fixturesList.innerHTML = `<div class="no-fixtures">No fixtures today</div>`
 	} else {
 		const fragment = document.createDocumentFragment()
