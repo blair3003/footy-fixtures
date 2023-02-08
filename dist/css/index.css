@@ -45,6 +45,7 @@ h1 {
 	gap: 1rem;
 	cursor: pointer;
 	animation: fadeIn 1s;
+    scrollbar-width: none;
 }
 
 button {
