@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/blair3003/footy-fixtures#readme",
   "dependencies": {
-    "node-fetch": "^3.3.0"
+    "node-fetch": "2.6.1"
   }
 }
