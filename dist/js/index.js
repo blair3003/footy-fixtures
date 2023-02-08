@@ -1,4 +1,3 @@
-import { API_FOOTBALL_KEY } from './funcs/api.js'
 import {
 	loadFixtures
 } from './funcs/data.js'
