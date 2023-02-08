@@ -15,6 +15,8 @@ export default class FootyFixtures {
 
 	update(offset = 0) {
 		console.log('Updating state')
+		console.log('this._fixtures')
+		console.log(this._fixtures)
 		const date = this._date + (offset * 24 * 60 * 60 * 1000)
 		this._date = date
 		const fixtures = JSON.parse(localStorage.getItem('footy-fixtures'))?.fixtures
