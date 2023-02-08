@@ -24,8 +24,6 @@ export const fetchFixtures = async () => {
 			method: "POST",
 		})
 		const fixturesJson = await fixturesStream.json()
-		console.log('fetchFixtures')
-		console.log(fixturesJson)
 		return fixturesJson
 	} catch (err) {
 		console.error(err)
@@ -59,8 +57,6 @@ export const fetchFixturesWithIds = async (ids) => {
 			body: idsString
 		})
 		const fixturesJson = await fixturesStream.json()
-		console.log('fetchFixturesWithIds')
-		console.log(fixturesJson)
 		return fixturesJson
 	} catch (err) {
 		console.error(err)
