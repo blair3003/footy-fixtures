@@ -16,14 +16,19 @@ html {
 }
 
 body {
+	min-height: 100vh;
 	max-width: 800px;
 	margin: auto;
 	color: whitesmoke;
-	background-color: #15091f;
+	background-color: #3d195b;
+	background-image: url("/img/bg.jpg");
+	background-size: cover;
+	background-blend-mode: hard-light;
+
 }
 
 header {
-	background-color: #3d195b;
+	background: linear-gradient(#220e33, #3d195b); 
 }
 
 a {
@@ -35,7 +40,6 @@ a {
 h1 {
 	padding: 1rem;
 	text-align: center;
-	filter: drop-shadow(0 0 0.75rem rgba(0,0,0,0.5));
 }
 
 #date-buttons {
