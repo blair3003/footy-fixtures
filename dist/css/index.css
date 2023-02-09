@@ -16,14 +16,14 @@ html {
 }
 
 body {
-	min-height: 100vh;
+	height: 100vh;
 	max-width: 800px;
 	margin: auto;
 	color: whitesmoke;
-	background-color: #3d195b;
+	background-color: rgba(61, 25, 91, 0.5);
 	background-image: url("/img/bg.jpg");
 	background-size: cover;
-	background-blend-mode: hard-light;
+	background-blend-mode: overlay;
 
 }
 
