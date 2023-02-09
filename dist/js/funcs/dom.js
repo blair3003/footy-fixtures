@@ -145,9 +145,25 @@ const setFixtureText = (fixture) => {
 		default:
 			status = `${fixture.goals.home} - ${fixture.goals.away}`
 	}
-	return `<div class="home">${fixture.teams.home.name}</div> 
+	return `<div class="home">${shortenTeamName(fixture.teams.home.name)}</div> 
 			<img class="logo" src="${fixture.teams.home.logo}" /> 
 			<div class="status">${status}</div> 
 			<img class="logo" src="${fixture.teams.away.logo}" /> 
-			<div class="away">${fixture.teams.away.name}</div>`
+			<div class="away">${shortenTeamName(fixture.teams.away.name)}</div>`
+}
+
+const shortenTeamName = (name) => {
+	switch (name) {
+		case 'Manchester United':
+			return 'Man United'
+			break
+		case 'Manchester City':
+			return 'Man City'
+			break
+		case 'Nottingham Forest':
+			return 'Nottm Forest'
+			break
+		default:
+			return name
+	}
 }
