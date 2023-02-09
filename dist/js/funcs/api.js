@@ -1,4 +1,4 @@
-// export const API_FOOTBALL_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+// export const API_FOOTBALL_KEY = "xxxx"
 
 // export const fetchFixtures = async () => {
 // 	console.log('Fetching data')
