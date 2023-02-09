@@ -16,7 +16,6 @@ html {
 }
 
 body {
-	height: 100vh;
 	max-width: 800px;
 	margin: auto;
 	color: whitesmoke;
@@ -29,6 +28,7 @@ body {
 
 header {
 	background: linear-gradient(#220e33, #3d195b); 
+	-webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -38,7 +38,7 @@ a {
 }
 
 h1 {
-	padding: 1rem;
+	padding: 2rem;
 	text-align: center;
 }
 
@@ -54,7 +54,7 @@ h1 {
 
 button {
 	all: unset;
-	padding: 0.5rem;
+	padding: 1rem;
 	flex-shrink: 0;
 	font-size: 0.75rem;
 }
