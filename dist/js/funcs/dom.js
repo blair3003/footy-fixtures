@@ -129,7 +129,7 @@ const updateFixtureList = () => {
 			fragment.append(div)
 		})			
 
-		setTimeout(() => fixturesList.append(fragment), 500)		
+		setTimeout(() => fixturesList.append(fragment), 100)		
 		
 	}
 }
