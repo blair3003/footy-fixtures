@@ -1,3 +1,3 @@
-# Footy Fixtures
+# Footy Fixtures ⚽
 
-[Try the app here!](https://serene-fudge-ccbed0.netlify.app/)
+<a href="https://serene-fudge-ccbed0.netlify.app/" target="_blank">Try the app here!</a>
