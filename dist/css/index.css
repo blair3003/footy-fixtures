@@ -70,6 +70,12 @@ button {
 	align-items: center;
 	gap: 0.5rem;
 	background-color: #1b1b1b;
+	animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+	0% { opacity: 0; }
+	100% { opacity: 1; }
 }
 
 #plus0 {
@@ -79,7 +85,6 @@ button {
 
 .no-fixtures {
 	font-size: 1rem;
-	animation: fadeIn 1s;
 }
 
 .fixture {
@@ -87,13 +92,8 @@ button {
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
-	animation: fadeIn 1s;
 }
 
-@keyframes fadeIn {
-	0% { opacity: 0; }
-	100% { opacity: 1; }
-}
 
 .home {
 	text-align: right;
