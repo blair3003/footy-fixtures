@@ -120,16 +120,20 @@ const updateFixtureList = () => {
 	} else {
 		const fragment = document.createDocumentFragment()
 		fixtures.sort((a, b) => a.fixture.timestamp - b.fixture.timestamp)
-	
-		fixtures.forEach(async fixture => {
-			const div = document.createElement("div")
-			div.className = "fixture"
-			div.innerHTML = await setFixtureText(fixture)
-			fragment.append(div)
-		})			
 
-		// Create a new element for each fixture and append to the fixtures container
-		fixturesList.append(fragment)					
+		try {
+			fixtures.forEach(async fixture => {
+				const div = document.createElement("div")
+				div.className = "fixture"
+				div.innerHTML = await setFixtureText(fixture)
+				fragment.append(div)
+			})			
+		} catch (err) {
+			console.error(err)
+		} finally {
+			// Create a new element for each fixture and append to the fixtures container
+			fixturesList.append(fragment)			
+		}
 	}
 }
 
